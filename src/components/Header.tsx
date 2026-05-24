@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ShoppingBag, Search, User, ChevronLeft } from "lucide-react";
 import { useCartStore } from "@/store/useCartStore";
+import { useUserStore } from "@/store/useUserStore";
 import CartDrawer from "./CartDrawer";
 import { PRODUCTS, Product } from "@/data/products";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,6 +15,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const isCartOpen = useCartStore((state) => state.isCartOpen);
   const setCartOpen = useCartStore((state) => state.setCartOpen);
+  const user = useUserStore((state) => state.user);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -116,6 +118,18 @@ export default function Header() {
               <Search className="w-5 h-5 stroke-[1.5]" />
             </button>
 
+            {/* User Profile Button */}
+            <Link
+              href="/profile"
+              className="p-1.5 hover:text-[#D4AF37] transition-colors duration-300 relative flex items-center"
+              aria-label="אזור אישי"
+            >
+              <User className="w-5 h-5 stroke-[1.5]" />
+              {user && (
+                <span className="absolute top-1.5 left-1.5 bg-[#D4AF37] w-1.5 h-1.5 rounded-full animate-pulse" />
+              )}
+            </Link>
+
             {/* Cart Button */}
             <button
               onClick={() => setCartOpen(true)}
@@ -130,17 +144,29 @@ export default function Header() {
               )}
             </button>
 
-            {/* Mobile Hamburger menu */}
+            {/* Mobile Hamburger menu (Morphing SVG) */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-1.5 hover:text-[#D4AF37] transition-colors duration-300"
+              className="md:hidden flex flex-col justify-center items-center w-8 h-8 focus:outline-none z-50 relative group"
               aria-label="תפריט ניווט"
             >
-              {isMobileMenuOpen ? (
-                <X className="w-5 h-5 stroke-[1.5]" />
-              ) : (
-                <Menu className="w-5 h-5 stroke-[1.5]" />
-              )}
+              <div className="flex flex-col gap-1.5 w-5">
+                <motion.span
+                  animate={isMobileMenuOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-full h-[1.5px] bg-[#111111] group-hover:bg-[#D4AF37] origin-center"
+                />
+                <motion.span
+                  animate={isMobileMenuOpen ? { opacity: 0, scale: 0 } : { opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-full h-[1.5px] bg-[#111111] group-hover:bg-[#D4AF37]"
+                />
+                <motion.span
+                  animate={isMobileMenuOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-full h-[1.5px] bg-[#111111] group-hover:bg-[#D4AF37] origin-center"
+                />
+              </div>
             </button>
           </div>
         </div>
@@ -153,27 +179,61 @@ export default function Header() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: "-100%" }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-0 z-30 bg-white pt-24 px-8 pb-10 flex flex-col justify-between md:hidden"
+            exit={{ opacity: 0, y: "-100%" }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-30 bg-white pt-28 px-8 pb-10 flex flex-col justify-between md:hidden"
           >
-            <div className="flex flex-col space-y-6 mt-6">
+            <motion.div 
+              initial="closed"
+              animate="open"
+              exit="closed"
+              variants={{
+                open: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
+                closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
+              }}
+              className="flex flex-col space-y-6 mt-6"
+            >
               {navLinks.map((link) => (
-                <Link
+                <motion.div
                   key={link.name}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`font-serif text-xl border-b border-[#F1F1F1] pb-4 flex justify-between items-center ${
-                    link.isSpecial ? "text-[#D4AF37] font-semibold" : "text-[#111111]"
-                  }`}
+                  variants={{
+                    closed: { opacity: 0, y: 15 },
+                    open: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
+                  }}
                 >
-                  <span>{link.name}</span>
-                  <ChevronLeft className="w-4 h-4 text-neutral-400" />
-                </Link>
+                  <Link
+                    href={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`font-serif text-xl border-b border-[#F1F1F1] pb-4 flex justify-between items-center ${
+                      link.isSpecial ? "text-[#D4AF37] font-semibold" : "text-[#111111]"
+                    }`}
+                  >
+                    <span>{link.name}</span>
+                    <ChevronLeft className="w-4 h-4 text-neutral-400" />
+                  </Link>
+                </motion.div>
               ))}
-            </div>
+
+              {/* Mobile Account link */}
+              <motion.div
+                variants={{
+                  closed: { opacity: 0, y: 15 },
+                  open: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
+                }}
+              >
+                <Link
+                  href="/profile"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="font-serif text-xl border-b border-[#F1F1F1] pb-4 flex justify-between items-center text-[#111111]/80"
+                >
+                  <span>{user ? `החשבון שלי (${user.name})` : "התחברות לאזור האישי"}</span>
+                  <User className="w-4 h-4 text-neutral-400" />
+                </Link>
+              </motion.div>
+            </motion.div>
+
             <div className="text-center text-[10px] text-neutral-400 uppercase tracking-widest font-light">
               תכשיטי יאיר - Minimalist Tech Luxury
             </div>

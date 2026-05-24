@@ -105,43 +105,45 @@ export default function CategoryPageClient({
       </section>
 
       {/* Toolbar - Filters & Sorters */}
-      <section className="border-b border-[#F1F1F1] py-5 sticky top-[72px] bg-white z-30 shadow-sm/5 luxury-glass">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 text-xs font-semibold">
+      <section className="border-b border-[#F1F1F1] py-3.5 sticky top-[72px] bg-white z-30 shadow-sm/5 luxury-glass">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 text-xs font-semibold">
           
-          {/* Right side: Tag Filter Pills */}
-          <div className="flex flex-wrap gap-2 items-center">
-            <span className="text-neutral-400 font-light flex items-center gap-1.5 ml-2">
+          {/* Right side: Tag Filter Pills (Scrollable on mobile) */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth flex-1 py-1">
+            <span className="text-neutral-400 font-light flex items-center gap-1.5 ml-2 shrink-0">
               <SlidersHorizontal className="w-3.5 h-3.5" />
-              <span>סנני לפי:</span>
+              <span className="hidden sm:inline">סנן לפי:</span>
             </span>
-            {[
-              { id: "all", name: "הכל" },
-              { id: "New", name: "חדשים" },
-              { id: "Sale", name: "במבצע" },
-              { id: "VIP", name: "VIP" },
-            ].map((tag) => (
-              <button
-                key={tag.id}
-                onClick={() => setActiveTag(tag.id as TagFilter)}
-                className={`px-4 py-2 border rounded-none transition-all duration-300 ${
-                  activeTag === tag.id
-                    ? "bg-[#111111] border-[#111111] text-white"
-                    : "bg-white border-[#F1F1F1] text-neutral-500 hover:border-neutral-400"
-                }`}
-              >
-                {tag.name}
-              </button>
-            ))}
+            <div className="flex gap-1.5">
+              {[
+                { id: "all", name: "הכל" },
+                { id: "New", name: "חדשים" },
+                { id: "Sale", name: "במבצע" },
+                { id: "VIP", name: "VIP" },
+              ].map((tag) => (
+                <button
+                  key={tag.id}
+                  onClick={() => setActiveTag(tag.id as TagFilter)}
+                  className={`px-3 py-1.5 border rounded-none text-[11px] transition-all duration-300 shrink-0 ${
+                    activeTag === tag.id
+                      ? "bg-[#111111] border-[#111111] text-white"
+                      : "bg-white border-[#F1F1F1] text-neutral-500 hover:border-neutral-400"
+                  }`}
+                >
+                  {tag.name}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Left side: Custom Dropdown Sort selector */}
-          <div className="relative self-end sm:self-auto">
+          <div className="relative shrink-0">
             <button
               onClick={() => setIsSortOpen(!isSortOpen)}
-              className="flex items-center gap-2 px-4 py-2 border border-[#F1F1F1] hover:border-neutral-400 bg-white"
+              className="flex items-center gap-1.5 px-3 py-1.5 border border-[#F1F1F1] hover:border-neutral-400 bg-white text-[11px]"
             >
               <span>{sortLabels[activeSort]}</span>
-              <ChevronDown className={`w-4 h-4 text-neutral-400 transition-transform duration-300 ${isSortOpen ? "rotate-180" : ""}`} />
+              <ChevronDown className={`w-3.5 h-3.5 text-neutral-400 transition-transform duration-300 ${isSortOpen ? "rotate-180" : ""}`} />
             </button>
 
             <AnimatePresence>
@@ -152,7 +154,7 @@ export default function CategoryPageClient({
                     initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 5 }}
-                    className="absolute left-0 mt-1.5 w-48 bg-white border border-[#F1F1F1] shadow-xl z-50 rounded-none overflow-hidden"
+                    className="absolute left-0 mt-1.5 w-40 bg-white border border-[#F1F1F1] shadow-xl z-50 rounded-none overflow-hidden"
                   >
                     {Object.entries(sortLabels).map(([key, value]) => (
                       <button
@@ -161,7 +163,7 @@ export default function CategoryPageClient({
                           setActiveSort(key as SortOption);
                           setIsSortOpen(false);
                         }}
-                        className={`w-full text-right px-4 py-2.5 hover:bg-[#F9F9F9] transition-colors text-xs font-medium block ${
+                        className={`w-full text-right px-3 py-2 hover:bg-[#F9F9F9] transition-colors text-[11px] font-medium block ${
                           activeSort === key ? "text-[#D4AF37] font-semibold bg-neutral-50/50" : "text-neutral-600"
                         }`}
                       >

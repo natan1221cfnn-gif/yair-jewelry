@@ -109,17 +109,18 @@ export default function VIPConcierge() {
             </span>
           )}
         </button>
+      </div>
 
-        {/* Live Chat Panel */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.3 }}
-              className="absolute bottom-20 left-0 w-[350px] sm:w-[380px] h-[500px] bg-white border border-[#F1F1F1] shadow-2xl flex flex-col overflow-hidden text-right text-[#111111]"
-            >
+      {/* Live Chat Panel */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed bottom-0 sm:bottom-24 left-0 sm:left-6 right-0 sm:right-auto w-full sm:w-[380px] h-[100dvh] sm:h-[500px] bg-white border-t sm:border border-[#F1F1F1] shadow-2xl flex flex-col overflow-hidden text-right text-[#111111] z-50"
+          >
               {/* Header */}
               <div className="p-4 bg-[#111111] text-white flex justify-between items-center border-b border-[#D4AF37]/30">
                 <div className="flex items-center gap-3">
@@ -226,7 +227,6 @@ export default function VIPConcierge() {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
     </>
   );
 }

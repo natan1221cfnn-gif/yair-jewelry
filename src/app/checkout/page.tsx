@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useCartStore } from "@/store/useCartStore";
+import { useUserStore } from "@/store/useUserStore";
 import { CreditCard, ShoppingBag, ArrowRight, Trash2, CheckCircle2, Award, Gift } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function CheckoutPage() {
   const { items, getTotalPrice, clearCart } = useCartStore();
+  const { user, login, addOrder } = useUserStore();
   
   // Checkout stages: 'form' | 'success'
   const [stage, setStage] = useState<"form" | "success">("form");
@@ -27,6 +29,21 @@ export default function CheckoutPage() {
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardCvv, setCardCvv] = useState("");
+
+  // Prefill details if user is logged in
+  useEffect(() => {
+    if (user) {
+      setEmail(user.email || "");
+      if (user.name) {
+        const parts = user.name.split(" ");
+        setFirstName(parts[0] || "");
+        setLastName(parts.slice(1).join(" ") || "");
+      }
+      if (user.phone) setPhone(user.phone || "");
+      if (user.city) setCity(user.city || "");
+      if (user.address) setAddress(user.address || "");
+    }
+  }, [user]);
 
   // Gift Wrapping States
   const [isGiftWrapping, setIsGiftWrapping] = useState(false);
@@ -69,6 +86,45 @@ export default function CheckoutPage() {
 
     const randomOrderId = `YJ-${Math.floor(100000 + Math.random() * 900000)}`;
     setOrderId(randomOrderId);
+
+    // Save order to profile history
+    const newOrder = {
+      id: randomOrderId,
+      date: new Date().toISOString().split("T")[0],
+      items: items.map((item) => ({
+        productId: item.product.id,
+        name: item.product.name,
+        englishName: item.product.englishName,
+        image: item.product.images[0],
+        size: item.selectedSize,
+        variationName: item.selectedVariation.name,
+        quantity: item.quantity,
+        price: item.customPrice ?? (item.product.salePrice ?? item.product.price),
+        customizations: item.customizations,
+      })),
+      total: finalPrice,
+      status: "בסטודיו" as const,
+      shippingDetails: {
+        firstName,
+        lastName,
+        phone,
+        city,
+        address,
+      },
+      giftWrapping: isGiftWrapping
+        ? {
+            packaging: giftPackaging,
+            greeting: giftGreeting || undefined,
+          }
+        : undefined,
+    };
+    addOrder(newOrder);
+
+    // Auto-login if guest checkout
+    if (!user) {
+      login(email, `${firstName} ${lastName}`.trim() || "אורח VIP");
+    }
+
     setStage("success");
     setTimeout(() => {
       clearCart();
