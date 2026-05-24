@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-assistant), sans-serif;
+  --font-serif: var(--font-frank-ruhl), serif;
+  
+  --color-gold: #D4AF37;
+  --color-gold-hover: #b8972e;
+  --color-nude: #E6D6C3;
+  --color-obsidian: #111111;
+  --color-border-muted: #F1F1F1;
+}
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #111111;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FFFFFF;
+  color: #111111;
+  font-family: var(--font-assistant), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar for luxury feel */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFFFFF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E6D6C3;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D4AF37;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Premium zoom effect on hover */
+.zoom-hover-trigger {
+  overflow: hidden;
+}
+.zoom-hover-target {
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+}
+.zoom-hover-trigger:hover .zoom-hover-target {
+  transform: scale(1.06);
+}
+
+/* Glassmorphism for luxury elements */
+.luxury-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
