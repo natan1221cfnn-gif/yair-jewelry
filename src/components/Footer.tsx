@@ -12,9 +12,9 @@ export default function Footer() {
           {/* Column 1: Brand details */}
           <div className="space-y-4">
             <div className="flex flex-col">
-              <span className="font-serif text-lg font-bold tracking-wider">תכשיטי יאיר</span>
+              <span className="font-serif text-lg font-bold tracking-wider">תכשיטי אלה</span>
               <span className="text-[8px] tracking-[0.25em] text-neutral-400 uppercase font-light -mt-0.5">
-                YAIR JEWELRY
+                ELLA JEWELRY
               </span>
             </div>
             <p className="text-xs text-neutral-500 font-light leading-relaxed">
@@ -98,7 +98,7 @@ export default function Footer() {
         {/* Divider and payment logos */}
         <div className="mt-12 pt-8 border-t border-[#F1F1F1] flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-[10px] text-neutral-400 font-light font-sans">
-            &copy; {currentYear} תכשיטי יאיר בע״מ. כל הזכויות שמורות. Minimalist Tech Luxury.
+            &copy; {currentYear} תכשיטי אלה בע״מ. כל הזכויות שמורות. Minimalist Tech Luxury.
           </p>
           
           {/* MOCKED PAYMENT BRAND ICONS */}

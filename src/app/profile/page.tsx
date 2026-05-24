@@ -516,7 +516,7 @@ export default function ProfilePage() {
                               </div>
                               <div className="p-4 border border-[#F9F9F9] space-y-1.5">
                                 <span className="font-bold text-black block">💎 ניקוי ותחזוקת זהב שנתיים</span>
-                                <p>טיפול פוליש מקצועי, חידוש רודיום וחיזוק שיבוצים שנתי חינם לכל תכשיטי יאיר שברשותך.</p>
+                                <p>טיפול פוליש מקצועי, חידוש רודיום וחיזוק שיבוצים שנתי חינם לכל תכשיטי אלה שברשותך.</p>
                               </div>
                               <div className="p-4 border border-[#F9F9F9] space-y-1.5">
                                 <span className="font-bold text-black block">📅 הזמנות לתערוכות סטודיו</span>

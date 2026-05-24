@@ -129,7 +129,7 @@ export default function AdminDashboard() {
           {/* Dashboard Logo */}
           <div className="flex justify-between items-center">
             <div className="flex flex-col">
-              <span className="font-serif text-lg font-bold tracking-wider">תכשיטי יאיר</span>
+              <span className="font-serif text-lg font-bold tracking-wider">תכשיטי אלה</span>
               <span className="text-[8px] tracking-[0.25em] text-[#D4AF37] font-semibold uppercase -mt-0.5">
                 פאנל ניהול ומלאי
               </span>
@@ -175,7 +175,7 @@ export default function AdminDashboard() {
         </div>
 
         <div className="pt-6 border-t border-[#F1F1F1] text-[10px] text-neutral-400 font-light hidden lg:block">
-          מערכת ניהול תכשיטי יאיר v2.1<br />
+          מערכת ניהול תכשיטי אלה v2.1<br />
           RTL Native Custom UI
         </div>
       </aside>

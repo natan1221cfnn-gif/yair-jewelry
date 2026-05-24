@@ -165,7 +165,7 @@ export const PRODUCTS: Product[] = [
         author: "אורית ב.",
         rating: 5,
         date: "2026-02-14",
-        content: "יצירת אמנות. הצמיד נוצץ למרחקים ונשאר סופר יציב על היד. שירות VIP אמיתי של תכשיטי יאיר.",
+        content: "יצירת אמנות. הצמיד נוצץ למרחקים ונשאר סופר יציב על היד. שירות VIP אמיתי של תכשיטי אלה.",
         image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop"
       }
     ]

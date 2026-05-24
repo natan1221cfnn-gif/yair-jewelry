@@ -16,7 +16,7 @@ const frankRuhl = Frank_Ruhl_Libre({
 });
 
 export const metadata: Metadata = {
-  title: "תכשיטי יאיר | Yair Jewelry - Minimalist Tech Luxury",
+  title: "תכשיטי אלה | Ella Jewelry - Minimalist Tech Luxury",
   description: "חנות תכשיטי יוקרה בעיצוב מינימליסטי - זהב, יהלומים וקולקציות בלעדיות",
 };
 

@@ -81,10 +81,10 @@ export default function Header() {
           <div className="flex items-center">
             <Link href="/" className="group flex flex-col items-start select-none">
               <span className="font-serif text-xl sm:text-2xl font-bold tracking-wider text-[#111111] group-hover:text-[#D4AF37] transition-colors duration-300">
-                תכשיטי יאיר
+                תכשיטי אלה
               </span>
               <span className="text-[9px] tracking-[0.25em] text-[#111111]/60 uppercase font-light -mt-0.5">
-                YAIR JEWELRY
+                ELLA JEWELRY
               </span>
             </Link>
           </div>
@@ -235,7 +235,7 @@ export default function Header() {
             </motion.div>
 
             <div className="text-center text-[10px] text-neutral-400 uppercase tracking-widest font-light">
-              תכשיטי יאיר - Minimalist Tech Luxury
+              תכשיטי אלה - Minimalist Tech Luxury
             </div>
           </motion.div>
         )}
